@@ -76,6 +76,46 @@
                     { text: "Restructure the team for agility.", cost: 2700 },
                     { text: "Redistribute responsibilities carefully.", cost: 2000 }
                 ]
+            },
+            {
+                text: "An unexpected crisis requires immediate attention. How do you respond?",
+                options: [
+                    { text: "Stick to the plan and handle the crisis within existing resources.", cost: 1500 },
+                    { text: "Divert all resources to address the crisis.", cost: 3000 },
+                    { text: "Balance between crisis management and ongoing projects.", cost: 2000 }
+                ]
+            },
+            {
+                text: "A new technology promises to revolutionize operations. What’s your move?",
+                options: [
+                    { text: "Invest heavily in the new technology.", cost: 4000 },
+                    { text: "Wait and see how the technology develops.", cost: 1000 },
+                    { text: "Gradually integrate the technology into operations.", cost: 2500 }
+                ]
+            },
+            {
+                text: "A key stakeholder demands a change in direction. How do you proceed?",
+                options: [
+                    { text: "Concede to the stakeholder’s demands.", cost: 2000 },
+                    { text: "Negotiate a compromise.", cost: 1500 },
+                    { text: "Stand firm on the current direction.", cost: 1000 }
+                ]
+            },
+            {
+                text: "Your organization has the opportunity to expand into a new market. What’s your strategy?",
+                options: [
+                    { text: "Go all-in on the new market.", cost: 3000 },
+                    { text: "Test the waters with a small pilot project.", cost: 1500 },
+                    { text: "Focus on strengthening the current market position.", cost: 1000 }
+                ]
+            },
+            {
+                text: "A major donor offers funding with strict conditions. Do you accept?",
+                options: [
+                    { text: "Accept the funding and comply with the conditions.", cost: 2500 },
+                    { text: "Reject the funding to maintain autonomy.", cost: 1000 },
+                    { text: "Negotiate less stringent conditions.", cost: 2000 }
+                ]
             }
         ];
         function startGame() {
@@ -88,12 +128,12 @@
             } else alert('Please enter your name to start.');
         }
         function chooseOption(optionIndex) {
-    let choice = scenarios[step].options[optionIndex];
-    cash -= choice.cost;
-    decisions.push({ step: step + 1, choice: choice.text, cost: choice.cost, cashRemaining: cash, reasoning: document.getElementById('reasoning').value.trim() });
-    step++;
-    step < scenarios.length ? nextStep() : endGame();
-}
+            let choice = scenarios[step].options[optionIndex];
+            cash -= choice.cost;
+            decisions.push({ step: step + 1, choice: choice.text, cost: choice.cost, cashRemaining: cash, reasoning: document.getElementById('reasoning').value.trim() });
+            step++;
+            step < scenarios.length ? nextStep() : endGame();
+        }
         function nextStep() {
             let scenario = scenarios[step];
             document.getElementById('scenarioText').textContent = scenario.text;
@@ -101,12 +141,12 @@
             document.getElementById('optionB').textContent = scenario.options[1].text + ` (-$${scenario.options[1].cost})`;
             document.getElementById('optionC').textContent = scenario.options[2].text + ` (-$${scenario.options[2].cost})`;
             document.getElementById('currentCash').textContent = `Remaining Cash: $${cash}`;
-            document.getElementById('gameProgress').textContent = `Step ${step + 1}/${scenarios.length}`;
+            document.getElementById('gameProgress').textContent = `Step ${step + 1}/10`;
         }
         function endGame() {
-    let outcome = cash > 5000 ? "Thrives in change" : cash < 2000 ? "Loses its identity and collapses" : "Becomes rigid and declines";
-    document.getElementById('gameContent').innerHTML = `<h2>Game Over!</h2><p>Your organization ${outcome}.</p><h3>Your Decisions:</h3><ul>${decisions.map(d => `<li>Step ${d.step}: ${d.choice} (-$${d.cost}) (Remaining Cash: $${d.cashRemaining}) - ${d.reasoning}</li>`).join('')}</ul>`;
-}
+            let outcome = cash > 5000 ? "Thrives in change" : cash < 2000 ? "Loses its identity and collapses" : "Becomes rigid and declines";
+            document.getElementById('gameContent').innerHTML = `<h2>Game Over!</h2><p>Your organization ${outcome}.</p><h3>Your Decisions:</h3><ul>${decisions.map(d => `<li>Step ${d.step}: ${d.choice} (-$${d.cost}) (Remaining Cash: $${d.cashRemaining}) - ${d.reasoning}</li>`).join('')}</ul>`;
+        }
     </script>
 </body>
 </html>
