@@ -42,85 +42,52 @@
             {
                 text: "A sweeping government reform bill is passed overnight, eliminating key funding programs your organization has relied on for years. The news comes without warning, and panic spreads within leadership. How do you respond?",
                 options: [
-                    { text: "Rally industry allies to push for policy amendments through lobbying and public campaigns, defending your traditional funding streams.", cost: 2000 },
-                    { text: "Initiate an internal restructure, reallocating funds to diversify income sources through new partnerships and alternative investments.", cost: 3000 },
-                    { text: "Apply for emergency grants and philanthropic support while gradually transitioning operations to accommodate the new funding environment.", cost: 2500 }
+                    { text: "Rally industry allies to push for policy amendments through lobbying and public campaigns, defending your traditional funding streams.", cost: 2000, gain: { step: 3, amount: 2000, reason: "Secured partial restoration of funding through lobbying efforts." } },
+                    { text: "Initiate an internal restructure, reallocating funds to diversify income sources through new partnerships and alternative investments.", cost: 3000, gain: { step: 3, amount: 3000, reason: "Diversified income sources leading to increased funding." } },
+                    { text: "Apply for emergency grants and philanthropic support while gradually transitioning operations to accommodate the new funding environment.", cost: 2500, gain: { step: 3, amount: 2500, reason: "Received emergency grants and support." } }
                 ]
             },
             {
                 text: "A rival organization with a disruptive model is rapidly gaining market share, drawing attention from stakeholders who once supported you. Your staff is divided—some see them as a threat, others as a potential ally. How do you position yourself?",
                 options: [
-                    { text: "Launch an aggressive marketing campaign emphasizing your deep-rooted credibility and proven track record to retain supporters.", cost: 1800 },
-                    { text: "Revamp your brand identity and services to align with emerging industry trends, taking inspiration from the rival’s approach.", cost: 2200 },
-                    { text: "Extend an invitation to collaborate, exploring a strategic alliance that could benefit both organizations.", cost: 2000 }
+                    { text: "Launch an aggressive marketing campaign emphasizing your deep-rooted credibility and proven track record to retain supporters.", cost: 1800, gain: { step: 2, amount: 1500, reason: "Increased donations from new branding." } },
+                    { text: "Revamp your brand identity and services to align with emerging industry trends, taking inspiration from the rival’s approach.", cost: 2200, gain: { step: 2, amount: 2000, reason: "Improved brand alignment increased stakeholder engagement." } },
+                    { text: "Extend an invitation to collaborate, exploring a strategic alliance that could benefit both organizations.", cost: 2000, gain: { step: 2, amount: 1800, reason: "Collaboration led to shared resources and funding." } }
                 ]
             },
             {
                 text: "Key senior staff members openly resist a proposed transformation initiative, citing concerns about mission drift. Younger employees, however, strongly advocate for modernization. Internal tensions mount. How do you navigate this?",
                 options: [
-                    { text: "Hold a town hall meeting, reaffirming the organization’s founding values and seeking to reassure senior staff.", cost: 1200 },
-                    { text: "Push forward with changes, emphasizing the long-term necessity of evolution, even at the risk of staff attrition.", cost: 2800 },
-                    { text: "Engage both sides in facilitated discussions to craft a middle-ground solution that acknowledges both tradition and innovation.", cost: 2000 }
+                    { text: "Hold a town hall meeting, reaffirming the organization’s founding values and seeking to reassure senior staff.", cost: 1200, gain: { step: 3, amount: 1200, reason: "Successful inclusive transition leading to increased employee retention." } },
+                    { text: "Push forward with changes, emphasizing the long-term necessity of evolution, even at the risk of staff attrition.", cost: 2800, gain: { step: 3, amount: 3000, reason: "Modernization increased operational efficiency." } },
+                    { text: "Engage both sides in facilitated discussions to craft a middle-ground solution that acknowledges both tradition and innovation.", cost: 2000, gain: { step: 3, amount: 2500, reason: "Balanced approach led to cohesive team and growth." } }
                 ]
             },
             {
                 text: "A high-profile industry player offers your organization a lucrative partnership—but it requires a major strategic shift that could alienate long-time supporters. What do you do?",
                 options: [
-                    { text: "Decline the partnership to maintain mission integrity, despite financial strain.", cost: 1400 },
-                    { text: "Fully embrace the partnership, repositioning the organization’s priorities to align with the new direction.", cost: 2600 },
-                    { text: "Negotiate a customized agreement that preserves key elements of your identity while incorporating beneficial aspects of the partnership.", cost: 2000 }
+                    { text: "Decline the partnership to maintain mission integrity, despite financial strain.", cost: 1400, gain: { step: 4, amount: 1500, reason: "Maintained integrity increased loyal supporter donations." } },
+                    { text: "Fully embrace the partnership, repositioning the organization’s priorities to align with the new direction.", cost: 2600, gain: { step: 4, amount: 3000, reason: "Partnership led to innovative projects and funding." } },
+                    { text: "Negotiate a customized agreement that preserves key elements of your identity while incorporating beneficial aspects of the partnership.", cost: 2000, gain: { step: 4, amount: 2500, reason: "Established a strategic alliance that boosted funding and innovation." } }
                 ]
             },
             {
                 text: "A sudden resignation of a charismatic leader creates a power vacuum. Morale drops, and uncertainty looms. Stakeholders demand a clear succession plan immediately. How do you stabilize the organization?",
                 options: [
-                    { text: "Quickly appoint an interim leader from within the ranks to restore stability.", cost: 1300 },
-                    { text: "Undertake a rigorous search for an external visionary leader to redefine the organization’s future.", cost: 2700 },
-                    { text: "Redistribute leadership responsibilities among the existing team to ensure continuity.", cost: 2000 }
-                ]
-            },
-            {
-                text: "A global crisis disrupts operations overnight. Staff morale plummets, donors hesitate, and uncertainty takes hold. The board looks to you for a decisive plan. What is your next move?",
-                options: [
-                    { text: "Stick to your long-term strategic plan, reassuring stakeholders that resilience will carry the organization through.", cost: 1500 },
-                    { text: "Redirect all available resources toward crisis management and damage control.", cost: 3000 },
-                    { text: "Adopt an agile approach, addressing the crisis while ensuring ongoing initiatives remain intact.", cost: 2000 }
-                ]
-            },
-            {
-                text: "A groundbreaking new technology emerges, promising to revolutionize the way your industry operates. However, it requires significant investment and could disrupt your existing model. What’s your approach?",
-                options: [
-                    { text: "Go all in, dedicating a substantial portion of the budget to become an early adopter and industry leader.", cost: 4000 },
-                    { text: "Adopt a wait-and-see strategy, observing competitors before making a move.", cost: 1000 },
-                    { text: "Begin phased integration, allowing gradual adaptation without jeopardizing stability.", cost: 2500 }
-                ]
-            },
-            {
-                text: "An influential stakeholder threatens to pull funding unless your organization shifts focus to align with their priorities. How do you respond?",
-                options: [
-                    { text: "Agree to the stakeholder’s conditions to secure financial stability.", cost: 2000 },
-                    { text: "Engage in tough negotiations to reach a compromise that maintains some independence.", cost: 1500 },
-                    { text: "Refuse to compromise your mission, risking financial setbacks.", cost: 1000 }
-                ]
-            },
-            {
-                text: "Your organization has a unique opportunity to expand into a rapidly growing market. The potential is enormous, but so are the risks. What strategy do you take?",
-                options: [
-                    { text: "Make a bold expansion move, committing significant resources to capitalize on the opportunity.", cost: 3000 },
-                    { text: "Launch a small-scale pilot project to test the market’s viability.", cost: 1500 },
-                    { text: "Stay focused on existing operations to solidify your current position.", cost: 1000 }
+                    { text: "Quickly appoint an interim leader from within the ranks to restore stability.", cost: 1300, gain: { step: 5, amount: 1500, reason: "Interim leadership stabilized operations." } },
+                    { text: "Undertake a rigorous search for an external visionary leader to redefine the organization’s future.", cost: 2700, gain: { step: 5, amount: 3000, reason: "New leader revitalized the organization." } },
+                    { text: "Redistribute leadership responsibilities among the existing team to ensure continuity.", cost: 2000, gain: { step: 5, amount: 2000, reason: "Shared leadership maintained stability." } }
                 ]
             },
             {
                 text: "A prestigious donor offers a multi-million-dollar grant but with strict conditions that could shift your organization’s core focus. Do you take the deal?",
                 options: [
-                    { text: "Accept the funding and adhere to the donor’s requirements.", cost: 2500 },
-                    { text: "Decline the grant to retain full autonomy over your mission.", cost: 1000 },
-                    { text: "Negotiate terms to secure funding while preserving key elements of your independence.", cost: 2000 }
+                    { text: "Accept the funding and adhere to the donor’s requirements.", cost: 2500, gain: { step: 6, amount: 3000, reason: "Secured significant funding with conditions." } },
+                    { text: "Decline the grant to retain full autonomy over your mission.", cost: 1000, gain: { step: 6, amount: 1500, reason: "Maintained autonomy attracted other donors." } },
+                    { text: "Negotiate terms to secure funding while preserving key elements of your independence.", cost: 2000, gain: { step: 6, amount: 2500, reason: "Successfully negotiated donor conditions to gain flexible funding." } }
                 ]
             }
         ];
-
         function startGame() {
             const name = document.getElementById('playerName').value.trim();
             if (name) {
