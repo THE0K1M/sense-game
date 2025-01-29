@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensemaking & Sensegiving Game</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; padding: 20px; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        button { padding: 10px 15px; margin-top: 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .hidden { display: none; }
+        textarea { width: 100%; height: 60px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sensemaking & Sensegiving Game</h1>
+        <div id="nameEntry">
+            <p>Enter your name to begin:</p>
+            <input type="text" id="playerName" placeholder="Your Name">
+            <button onclick="startGame()">Start</button>
+        </div>
+        <div id="gameContent" class="hidden">
+            <h2>Welcome, <span id="displayName"></span>!</h2>
+            <p>You are managing an organization facing external shocks. You have <strong>$10,000</strong> to distribute wisely.</p>
+            <p id="scenarioText"></p>
+            <button id="optionA" onclick="chooseOption('A')"></button>
+            <button id="optionB" onclick="chooseOption('B')"></button>
+            <button id="optionC" onclick="chooseOption('C')"></button>
+            <p>Reasoning:</p>
+            <textarea id="reasoning"></textarea>
+            <p id="currentCash"></p>
+            <p id="gameProgress"></p>
+        </div>
+    </div>
+    <script>
+        let cash = 10000, step = 0, decisions = [];
+        const scenarios = [
+            {
+                text: "A major policy change disrupts your funding stream. How do you react?",
+                options: [
+                    { text: "Lobby against the policy to maintain traditional funding.", cost: 1500 },
+                    { text: "Redesign operations to attract alternative funds.", cost: 2500 },
+                    { text: "Seek temporary grants while adjusting long-term strategies.", cost: 2000 }
+                ]
+            },
+            {
+                text: "A rival organization is gaining influence. How do you position yourself?",
+                options: [
+                    { text: "Strengthen your core programs and double down on values.", cost: 1800 },
+                    { text: "Rebrand and align with emerging trends.", cost: 2200 },
+                    { text: "Collaborate and find synergy between both groups.", cost: 2000 }
+                ]
+            },
+            {
+                text: "Internal resistance emerges against proposed changes. How do you handle it?",
+                options: [
+                    { text: "Hold internal meetings to reinforce legacy values.", cost: 1200 },
+                    { text: "Implement changes without full consensus.", cost: 2800 },
+                    { text: "Engage members and work toward an inclusive transition.", cost: 2000 }
+                ]
+            },
+            {
+                text: "A new partnership opportunity arises, but it requires strategic shifts. Accept?",
+                options: [
+                    { text: "Reject it and maintain current strategy.", cost: 1400 },
+                    { text: "Fully pivot to match the partner’s vision.", cost: 2600 },
+                    { text: "Negotiate a deal that aligns with both interests.", cost: 2000 }
+                ]
+            },
+            {
+                text: "A critical staff member leaves, causing instability. What do you prioritize?",
+                options: [
+                    { text: "Find a direct replacement quickly.", cost: 1300 },
+                    { text: "Restructure the team for agility.", cost: 2700 },
+                    { text: "Redistribute responsibilities carefully.", cost: 2000 }
+                ]
+            }
+        ];
+        function startGame() {
+            const name = document.getElementById('playerName').value.trim();
+            if (name) {
+                document.getElementById('displayName').textContent = name;
+                document.getElementById('nameEntry').classList.add('hidden');
+                document.getElementById('gameContent').classList.remove('hidden');
+                nextStep();
+            } else alert('Please enter your name to start.');
+        }
+        function chooseOption(optionIndex) {
+            let choice = scenarios[step].options[optionIndex];
+            cash -= choice.cost;
+            decisions.push({ step: step + 1, choice: choice.text, cost: choice.cost, cashRemaining: cash, reasoning: document.getElementById('reasoning').value.trim() });
+            step++;
+            step < scenarios.length ? nextStep() : endGame();
+        }
+        function nextStep() {
+            let scenario = scenarios[step];
+            document.getElementById('scenarioText').textContent = scenario.text;
+            document.getElementById('optionA').textContent = scenario.options[0].text + ` (-$${scenario.options[0].cost})`;
+            document.getElementById('optionB').textContent = scenario.options[1].text + ` (-$${scenario.options[1].cost})`;
+            document.getElementById('optionC').textContent = scenario.options[2].text + ` (-$${scenario.options[2].cost})`;
+            document.getElementById('currentCash').textContent = `Remaining Cash: $${cash}`;
+            document.getElementById('gameProgress').textContent = `Step ${step + 1}/${scenarios.length}`;
+        }
+        function endGame() {
+            let outcome = cash > 5000 ? "Thrives in change" : cash < 2000 ? "Loses its identity and collapses" : "Becomes rigid and declines";
+            document.getElementById('gameContent').innerHTML = `<h2>Game Over!</h2><p>Your organization ${outcome}.</p><h3>Your Decisions:</h3><ul>${decisions.map(d => `<li>Step ${d.step}: ${d.choice} (-$${d.cost}) (Remaining Cash: $${d.cashRemaining}) - ${d.reasoning}</li>`).join('')}</ul>`;
+        }
+    </script>
+</body>
+</html>
