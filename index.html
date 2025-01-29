@@ -103,7 +103,7 @@
             if (cash < 0) {
                 negativeBalanceCount++;
             }
-            decisions.push({ month: month + 1, choice: choice.text, cost: choice.cost, cashRemaining: cash, reasoning: document.getElementById('reasoning').value.trim() });
+            decisions.push({ month: month + 1, choice: choice.text, cost: choice.cost, gain: choice.gain, cashRemaining: cash, reasoning: document.getElementById('reasoning').value.trim() });
             if (choice.gain) {
                 gains.push({ step: month + choice.gain.step, amount: choice.gain.amount, reason: choice.gain.reason });
             }
@@ -127,7 +127,7 @@
         }
         function endGame() {
             let outcome = cash > 5000 ? "Thrives in change" : cash < 2000 ? "Loses its identity and collapses" : "Becomes rigid and declines";
-            document.getElementById('gameContent').innerHTML = `<h2>Game Over!</h2><p>Your organization ${outcome}.</p><h3>Your Decisions:</h3><ul>${decisions.map(d => `<li>Month ${d.month}: ${d.choice} (-$${d.cost}) (Remaining Cash: $${d.cashRemaining}) - ${d.reasoning}</li>`).join('')}</ul>`;
+            document.getElementById('gameContent').innerHTML = `<h2>Game Over!</h2><p>Your organization ${outcome}.</p><h3>Your Decisions:</h3><ul>${decisions.map(d => `<li>Month ${d.month}: ${d.choice} (-$${d.cost} -$${d.gain}) (Remaining Cash: $${d.cashRemaining}) - ${d.reasoning}</li>`).join('')}</ul>`;
             saveGame();
         }
         function bankrupt() {
