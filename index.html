@@ -36,6 +36,7 @@
     </div>
     <script>
         let cash = 10000, step = 0, decisions = [];
+        let negativeBalanceCount = 0;
         const scenarios = [
             {
                 text: "A major policy change disrupts your funding stream. How do you react?",
@@ -130,9 +131,16 @@
         function chooseOption(optionIndex) {
             let choice = scenarios[step].options[optionIndex];
             cash -= choice.cost;
+            if (cash < 0) {
+                negativeBalanceCount++;
+            }
             decisions.push({ step: step + 1, choice: choice.text, cost: choice.cost, cashRemaining: cash, reasoning: document.getElementById('reasoning').value.trim() });
             step++;
-            step < scenarios.length ? nextStep() : endGame();
+            if (negativeBalanceCount >= 3) {
+                bankrupt();
+            } else {
+                step < scenarios.length ? nextStep() : endGame();
+            }
         }
         function nextStep() {
             let scenario = scenarios[step];
@@ -146,6 +154,9 @@
         function endGame() {
             let outcome = cash > 5000 ? "Thrives in change" : cash < 2000 ? "Loses its identity and collapses" : "Becomes rigid and declines";
             document.getElementById('gameContent').innerHTML = `<h2>Game Over!</h2><p>Your organization ${outcome}.</p><h3>Your Decisions:</h3><ul>${decisions.map(d => `<li>Step ${d.step}: ${d.choice} (-$${d.cost}) (Remaining Cash: $${d.cashRemaining}) - ${d.reasoning}</li>`).join('')}</ul>`;
+        }
+        function bankrupt() {
+            document.getElementById('gameContent').innerHTML = `<h2>Game Over!</h2><p>Your organization went bankrupt due to negative balance three times.</p><h3>Your Decisions:</h3><ul>${decisions.map(d => `<li>Step ${d.step}: ${d.choice} (-$${d.cost}) (Remaining Cash: $${d.cashRemaining}) - ${d.reasoning}</li>`).join('')}</ul>`;
         }
     </script>
 </body>
