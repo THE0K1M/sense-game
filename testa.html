@@ -25,9 +25,9 @@
             <h2>Welcome, <span id="displayName"></span>!</h2>
             <p>You are managing an organization facing external shocks. You have <strong>$10,000</strong> to distribute wisely.</p>
             <p id="scenarioText"></p>
-            <button id="optionA" onclick="chooseOption('A')"></button>
-            <button id="optionB" onclick="chooseOption('B')"></button>
-            <button id="optionC" onclick="chooseOption('C')"></button>
+            <button id="optionA" onclick="chooseOption(0)"></button>
+            <button id="optionB" onclick="chooseOption(1)"></button>
+            <button id="optionC" onclick="chooseOption(2)"></button>
             <p>Reasoning:</p>
             <textarea id="reasoning"></textarea>
             <p id="currentCash"></p>
@@ -88,12 +88,12 @@
             } else alert('Please enter your name to start.');
         }
         function chooseOption(optionIndex) {
-            let choice = scenarios[step].options[optionIndex];
-            cash -= choice.cost;
-            decisions.push({ step: step + 1, choice: choice.text, cost: choice.cost, cashRemaining: cash, reasoning: document.getElementById('reasoning').value.trim() });
-            step++;
-            step < scenarios.length ? nextStep() : endGame();
-        }
+    let choice = scenarios[step].options[optionIndex];
+    cash -= choice.cost;
+    decisions.push({ step: step + 1, choice: choice.text, cost: choice.cost, cashRemaining: cash, reasoning: document.getElementById('reasoning').value.trim() });
+    step++;
+    step < scenarios.length ? nextStep() : endGame();
+}
         function nextStep() {
             let scenario = scenarios[step];
             document.getElementById('scenarioText').textContent = scenario.text;
@@ -104,9 +104,9 @@
             document.getElementById('gameProgress').textContent = `Step ${step + 1}/${scenarios.length}`;
         }
         function endGame() {
-            let outcome = cash > 5000 ? "Thrives in change" : cash < 2000 ? "Loses its identity and collapses" : "Becomes rigid and declines";
-            document.getElementById('gameContent').innerHTML = `<h2>Game Over!</h2><p>Your organization ${outcome}.</p><h3>Your Decisions:</h3><ul>${decisions.map(d => `<li>Step ${d.step}: ${d.choice} (-$${d.cost}) (Remaining Cash: $${d.cashRemaining}) - ${d.reasoning}</li>`).join('')}</ul>`;
-        }
+    let outcome = cash > 5000 ? "Thrives in change" : cash < 2000 ? "Loses its identity and collapses" : "Becomes rigid and declines";
+    document.getElementById('gameContent').innerHTML = `<h2>Game Over!</h2><p>Your organization ${outcome}.</p><h3>Your Decisions:</h3><ul>${decisions.map(d => `<li>Step ${d.step}: ${d.choice} (-$${d.cost}) (Remaining Cash: $${d.cashRemaining}) - ${d.reasoning}</li>`).join('')}</ul>`;
+}
     </script>
 </body>
 </html>
