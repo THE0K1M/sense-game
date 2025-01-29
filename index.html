@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,9 +38,8 @@
         </div>
     </div>
     <script>
-        let cash = 10000, step = 0, decisions = [];
-        let negativeBalanceCount = 0;
-const scenarios = [
+        let cash = 10000, month = 0, decisions = [], negativeBalanceCount = 0, gains = [];
+        const scenarios = [
             {
                 text: "A sweeping government reform bill is passed overnight, eliminating key funding programs your organization has relied on for years. The news comes without warning, and panic spreads within leadership. How do you respond?",
                 options: [
@@ -121,7 +121,7 @@ const scenarios = [
                 ]
             }
         ];
- function startGame() {
+        function startGame() {
             const name = document.getElementById('playerName').value.trim();
             if (name) {
                 document.getElementById('displayName').textContent = name;
@@ -137,8 +137,8 @@ const scenarios = [
                 negativeBalanceCount++;
             }
             decisions.push({ month: month + 1, choice: choice.text, cost: choice.cost, cashRemaining: cash, reasoning: document.getElementById('reasoning').value.trim() });
-            if (scenarios[month].gain && scenarios[month].gain.step === month + 1) {
-                gains.push(scenarios[month].gain);
+            if (choice.gain) {
+                gains.push({ step: month + choice.gain.step, amount: choice.gain.amount, reason: choice.gain.reason });
             }
             applyGains();
             document.getElementById('choiceResult').textContent = `You chose: ${choice.text}. Cost: $${choice.cost}.`;
@@ -165,18 +165,22 @@ const scenarios = [
         }
         function bankrupt() {
             document.getElementById('gameContent').innerHTML = `<h2>Game Over!</h2><p>Your organization went bankrupt due to negative balance three times.</p><h3>Your Decisions:</h3><ul>${decisions.map(d => `<li>Month ${d.month}: ${d.choice} (-$${d.cost}) (Remaining Cash: $${d.cashRemaining}) - ${d.reasoning}</li>`).join('')}</ul>`;
+            document.getElementById('gameContent').innerHTML += `<button onclick="restartGame()">File Chapter 11 Bankruptcy</button>`;
             saveGame();
         }
         function restartGame() {
             location.reload();
         }
         function applyGains() {
-            if (gains.length > 0) {
-                let gain = gains.shift();
-                cash += gain.amount;
-                decisions.push({ month: month + 1, choice: `Gain: ${gain.reason}`, gain: gain.amount, cashRemaining: cash });
-                document.getElementById('choiceResult').textContent += ` Gain: $${gain.amount} (${gain.reason}).`;
-            }
+            gains = gains.filter(gain => {
+                if (gain.step === month + 1) {
+                    cash += gain.amount;
+                    decisions.push({ month: month + 1, choice: `Gain: ${gain.reason}`, gain: gain.amount, cashRemaining: cash });
+                    document.getElementById('choiceResult').textContent += ` Gain: $${gain.amount} (${gain.reason}).`;
+                    return false;
+                }
+                return true;
+            });
         }
         function saveGame() {
             const csvContent = decisions.map(d => `${d.month},${d.choice},${d.cost || ''},${d.gain || ''},${d.cashRemaining},${d.reasoning || ''}`).join('\n');
