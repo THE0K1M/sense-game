@@ -37,85 +37,85 @@
     <script>
         let cash = 10000, step = 0, decisions = [];
         let negativeBalanceCount = 0;
-        const scenarios = [
+const scenarios = [
             {
-                text: "A major policy change disrupts your funding stream. How do you react?",
+                text: "A sweeping government reform bill is passed overnight, eliminating key funding programs your organization has relied on for years. The news comes without warning, and panic spreads within leadership. How do you respond?",
                 options: [
-                    { text: "Lobby against the policy to maintain traditional funding.", cost: 1500 },
-                    { text: "Redesign operations to attract alternative funds.", cost: 2500 },
-                    { text: "Seek temporary grants while adjusting long-term strategies.", cost: 2000 }
+                    { text: "Rally industry allies to push for policy amendments through lobbying and public campaigns, defending your traditional funding streams.", cost: 2000 },
+                    { text: "Initiate an internal restructure, reallocating funds to diversify income sources through new partnerships and alternative investments.", cost: 3000 },
+                    { text: "Apply for emergency grants and philanthropic support while gradually transitioning operations to accommodate the new funding environment.", cost: 2500 }
                 ]
             },
             {
-                text: "A rival organization is gaining influence. How do you position yourself?",
+                text: "A rival organization with a disruptive model is rapidly gaining market share, drawing attention from stakeholders who once supported you. Your staff is divided—some see them as a threat, others as a potential ally. How do you position yourself?",
                 options: [
-                    { text: "Strengthen your core programs and double down on values.", cost: 1800 },
-                    { text: "Rebrand and align with emerging trends.", cost: 2200 },
-                    { text: "Collaborate and find synergy between both groups.", cost: 2000 }
+                    { text: "Launch an aggressive marketing campaign emphasizing your deep-rooted credibility and proven track record to retain supporters.", cost: 1800 },
+                    { text: "Revamp your brand identity and services to align with emerging industry trends, taking inspiration from the rival’s approach.", cost: 2200 },
+                    { text: "Extend an invitation to collaborate, exploring a strategic alliance that could benefit both organizations.", cost: 2000 }
                 ]
             },
             {
-                text: "Internal resistance emerges against proposed changes. How do you handle it?",
+                text: "Key senior staff members openly resist a proposed transformation initiative, citing concerns about mission drift. Younger employees, however, strongly advocate for modernization. Internal tensions mount. How do you navigate this?",
                 options: [
-                    { text: "Hold internal meetings to reinforce legacy values.", cost: 1200 },
-                    { text: "Implement changes without full consensus.", cost: 2800 },
-                    { text: "Engage members and work toward an inclusive transition.", cost: 2000 }
+                    { text: "Hold a town hall meeting, reaffirming the organization’s founding values and seeking to reassure senior staff.", cost: 1200 },
+                    { text: "Push forward with changes, emphasizing the long-term necessity of evolution, even at the risk of staff attrition.", cost: 2800 },
+                    { text: "Engage both sides in facilitated discussions to craft a middle-ground solution that acknowledges both tradition and innovation.", cost: 2000 }
                 ]
             },
             {
-                text: "A new partnership opportunity arises, but it requires strategic shifts. Accept?",
+                text: "A high-profile industry player offers your organization a lucrative partnership—but it requires a major strategic shift that could alienate long-time supporters. What do you do?",
                 options: [
-                    { text: "Reject it and maintain current strategy.", cost: 1400 },
-                    { text: "Fully pivot to match the partner’s vision.", cost: 2600 },
-                    { text: "Negotiate a deal that aligns with both interests.", cost: 2000 }
+                    { text: "Decline the partnership to maintain mission integrity, despite financial strain.", cost: 1400 },
+                    { text: "Fully embrace the partnership, repositioning the organization’s priorities to align with the new direction.", cost: 2600 },
+                    { text: "Negotiate a customized agreement that preserves key elements of your identity while incorporating beneficial aspects of the partnership.", cost: 2000 }
                 ]
             },
             {
-                text: "A critical staff member leaves, causing instability. What do you prioritize?",
+                text: "A sudden resignation of a charismatic leader creates a power vacuum. Morale drops, and uncertainty looms. Stakeholders demand a clear succession plan immediately. How do you stabilize the organization?",
                 options: [
-                    { text: "Find a direct replacement quickly.", cost: 1300 },
-                    { text: "Restructure the team for agility.", cost: 2700 },
-                    { text: "Redistribute responsibilities carefully.", cost: 2000 }
+                    { text: "Quickly appoint an interim leader from within the ranks to restore stability.", cost: 1300 },
+                    { text: "Undertake a rigorous search for an external visionary leader to redefine the organization’s future.", cost: 2700 },
+                    { text: "Redistribute leadership responsibilities among the existing team to ensure continuity.", cost: 2000 }
                 ]
             },
             {
-                text: "An unexpected crisis requires immediate attention. How do you respond?",
+                text: "A global crisis disrupts operations overnight. Staff morale plummets, donors hesitate, and uncertainty takes hold. The board looks to you for a decisive plan. What is your next move?",
                 options: [
-                    { text: "Stick to the plan and handle the crisis within existing resources.", cost: 1500 },
-                    { text: "Divert all resources to address the crisis.", cost: 3000 },
-                    { text: "Balance between crisis management and ongoing projects.", cost: 2000 }
+                    { text: "Stick to your long-term strategic plan, reassuring stakeholders that resilience will carry the organization through.", cost: 1500 },
+                    { text: "Redirect all available resources toward crisis management and damage control.", cost: 3000 },
+                    { text: "Adopt an agile approach, addressing the crisis while ensuring ongoing initiatives remain intact.", cost: 2000 }
                 ]
             },
             {
-                text: "A new technology promises to revolutionize operations. What’s your move?",
+                text: "A groundbreaking new technology emerges, promising to revolutionize the way your industry operates. However, it requires significant investment and could disrupt your existing model. What’s your approach?",
                 options: [
-                    { text: "Invest heavily in the new technology.", cost: 4000 },
-                    { text: "Wait and see how the technology develops.", cost: 1000 },
-                    { text: "Gradually integrate the technology into operations.", cost: 2500 }
+                    { text: "Go all in, dedicating a substantial portion of the budget to become an early adopter and industry leader.", cost: 4000 },
+                    { text: "Adopt a wait-and-see strategy, observing competitors before making a move.", cost: 1000 },
+                    { text: "Begin phased integration, allowing gradual adaptation without jeopardizing stability.", cost: 2500 }
                 ]
             },
             {
-                text: "A key stakeholder demands a change in direction. How do you proceed?",
+                text: "An influential stakeholder threatens to pull funding unless your organization shifts focus to align with their priorities. How do you respond?",
                 options: [
-                    { text: "Concede to the stakeholder’s demands.", cost: 2000 },
-                    { text: "Negotiate a compromise.", cost: 1500 },
-                    { text: "Stand firm on the current direction.", cost: 1000 }
+                    { text: "Agree to the stakeholder’s conditions to secure financial stability.", cost: 2000 },
+                    { text: "Engage in tough negotiations to reach a compromise that maintains some independence.", cost: 1500 },
+                    { text: "Refuse to compromise your mission, risking financial setbacks.", cost: 1000 }
                 ]
             },
             {
-                text: "Your organization has the opportunity to expand into a new market. What’s your strategy?",
+                text: "Your organization has a unique opportunity to expand into a rapidly growing market. The potential is enormous, but so are the risks. What strategy do you take?",
                 options: [
-                    { text: "Go all-in on the new market.", cost: 3000 },
-                    { text: "Test the waters with a small pilot project.", cost: 1500 },
-                    { text: "Focus on strengthening the current market position.", cost: 1000 }
+                    { text: "Make a bold expansion move, committing significant resources to capitalize on the opportunity.", cost: 3000 },
+                    { text: "Launch a small-scale pilot project to test the market’s viability.", cost: 1500 },
+                    { text: "Stay focused on existing operations to solidify your current position.", cost: 1000 }
                 ]
             },
             {
-                text: "A major donor offers funding with strict conditions. Do you accept?",
+                text: "A prestigious donor offers a multi-million-dollar grant but with strict conditions that could shift your organization’s core focus. Do you take the deal?",
                 options: [
-                    { text: "Accept the funding and comply with the conditions.", cost: 2500 },
-                    { text: "Reject the funding to maintain autonomy.", cost: 1000 },
-                    { text: "Negotiate less stringent conditions.", cost: 2000 }
+                    { text: "Accept the funding and adhere to the donor’s requirements.", cost: 2500 },
+                    { text: "Decline the grant to retain full autonomy over your mission.", cost: 1000 },
+                    { text: "Negotiate terms to secure funding while preserving key elements of your independence.", cost: 2000 }
                 ]
             }
         ];
