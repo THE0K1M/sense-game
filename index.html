@@ -32,6 +32,8 @@
             <textarea id="reasoning"></textarea>
             <p id="currentCash"></p>
             <p id="gameProgress"></p>
+            <p id="choiceResult"></p>
+            <button onclick="restartGame()">Restart</button>
         </div>
     </div>
     <script>
@@ -119,44 +121,72 @@ const scenarios = [
                 ]
             }
         ];
-        function startGame() {
+ function startGame() {
             const name = document.getElementById('playerName').value.trim();
             if (name) {
                 document.getElementById('displayName').textContent = name;
                 document.getElementById('nameEntry').classList.add('hidden');
                 document.getElementById('gameContent').classList.remove('hidden');
-                nextStep();
+                nextMonth();
             } else alert('Please enter your name to start.');
         }
         function chooseOption(optionIndex) {
-            let choice = scenarios[step].options[optionIndex];
+            let choice = scenarios[month].options[optionIndex];
             cash -= choice.cost;
             if (cash < 0) {
                 negativeBalanceCount++;
             }
-            decisions.push({ step: step + 1, choice: choice.text, cost: choice.cost, cashRemaining: cash, reasoning: document.getElementById('reasoning').value.trim() });
-            step++;
+            decisions.push({ month: month + 1, choice: choice.text, cost: choice.cost, cashRemaining: cash, reasoning: document.getElementById('reasoning').value.trim() });
+            if (scenarios[month].gain && scenarios[month].gain.step === month + 1) {
+                gains.push(scenarios[month].gain);
+            }
+            applyGains();
+            document.getElementById('choiceResult').textContent = `You chose: ${choice.text}. Cost: $${choice.cost}.`;
+            month++;
             if (negativeBalanceCount >= 3) {
                 bankrupt();
             } else {
-                step < scenarios.length ? nextStep() : endGame();
+                month < scenarios.length ? nextMonth() : endGame();
             }
         }
-        function nextStep() {
-            let scenario = scenarios[step];
+        function nextMonth() {
+            let scenario = scenarios[month];
             document.getElementById('scenarioText').textContent = scenario.text;
             document.getElementById('optionA').textContent = scenario.options[0].text + ` (-$${scenario.options[0].cost})`;
             document.getElementById('optionB').textContent = scenario.options[1].text + ` (-$${scenario.options[1].cost})`;
             document.getElementById('optionC').textContent = scenario.options[2].text + ` (-$${scenario.options[2].cost})`;
             document.getElementById('currentCash').textContent = `Remaining Cash: $${cash}`;
-            document.getElementById('gameProgress').textContent = `Step ${step + 1}/10`;
+            document.getElementById('gameProgress').textContent = `Month ${month + 1}/12`;
         }
         function endGame() {
             let outcome = cash > 5000 ? "Thrives in change" : cash < 2000 ? "Loses its identity and collapses" : "Becomes rigid and declines";
-            document.getElementById('gameContent').innerHTML = `<h2>Game Over!</h2><p>Your organization ${outcome}.</p><h3>Your Decisions:</h3><ul>${decisions.map(d => `<li>Step ${d.step}: ${d.choice} (-$${d.cost}) (Remaining Cash: $${d.cashRemaining}) - ${d.reasoning}</li>`).join('')}</ul>`;
+            document.getElementById('gameContent').innerHTML = `<h2>Game Over!</h2><p>Your organization ${outcome}.</p><h3>Your Decisions:</h3><ul>${decisions.map(d => `<li>Month ${d.month}: ${d.choice} (-$${d.cost}) (Remaining Cash: $${d.cashRemaining}) - ${d.reasoning}</li>`).join('')}</ul>`;
+            saveGame();
         }
         function bankrupt() {
-            document.getElementById('gameContent').innerHTML = `<h2>Game Over!</h2><p>Your organization went bankrupt due to negative balance three times.</p><h3>Your Decisions:</h3><ul>${decisions.map(d => `<li>Step ${d.step}: ${d.choice} (-$${d.cost}) (Remaining Cash: $${d.cashRemaining}) - ${d.reasoning}</li>`).join('')}</ul>`;
+            document.getElementById('gameContent').innerHTML = `<h2>Game Over!</h2><p>Your organization went bankrupt due to negative balance three times.</p><h3>Your Decisions:</h3><ul>${decisions.map(d => `<li>Month ${d.month}: ${d.choice} (-$${d.cost}) (Remaining Cash: $${d.cashRemaining}) - ${d.reasoning}</li>`).join('')}</ul>`;
+            saveGame();
+        }
+        function restartGame() {
+            location.reload();
+        }
+        function applyGains() {
+            if (gains.length > 0) {
+                let gain = gains.shift();
+                cash += gain.amount;
+                decisions.push({ month: month + 1, choice: `Gain: ${gain.reason}`, gain: gain.amount, cashRemaining: cash });
+                document.getElementById('choiceResult').textContent += ` Gain: $${gain.amount} (${gain.reason}).`;
+            }
+        }
+        function saveGame() {
+            const csvContent = decisions.map(d => `${d.month},${d.choice},${d.cost || ''},${d.gain || ''},${d.cashRemaining},${d.reasoning || ''}`).join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'game_progress.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     </script>
 </body>
